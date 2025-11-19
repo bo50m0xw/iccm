@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>ICCM MindShare Leaderboard re-style by Hip (@hiepdong)</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&amp;display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&amp;display=swap" rel="stylesheet">
+  <style>
+    * {
+      box-sizing: border-box;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+
+    body {
+      margin: 0;
+      padding: 20px;
+      background: #0f172a;
+      color: #e5e7eb;
+    }
+
+    h1 {
+      margin-top: 0;
+      margin-bottom: 10px;
+      font-size: 28px;
+    }
+
+    .subtitle {
+      color: #9ca3af;
+      margin-bottom: 20px;
+      font-size: 14px;
+    }
+	.hero {
+		text-align: center;
+		margin-bottom: 2rem;
+		padding: 2rem 0;
+	}
+	.hero h1 {
+		font-family: 'Press Start 2P', monospace;
+		font-size: clamp(1.25rem, 4vw, 2rem);
+		font-weight: 400;
+		letter-spacing: 0.02em;
+		color: var(--text-primary);
+		text-transform: uppercase;
+		margin-bottom: 1rem;
+		line-height: 1.4;
+	}
+	.pixel-heading {
+		letter-spacing: .05em;
+		text-transform: uppercase;
+		font-family: Press Start\ 2P, monospace;
+		line-height: 1.4;
+	}
+	.text-balance {
+		text-wrap: balance;
+	}
+	.text-center {
+		text-align: center;
+	}
+	.font-bold {
+		--tw-font-weight: var(--font-weight-bold);
+		font-weight: var(--font-weight-bold);
+	}
+    .card {
+      background: #020617;
+      border-radius: 16px;
+      padding: 20px;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+      border: 1px solid #1f2937;
+    }
+
+    #status {
+      margin-bottom: 12px;
+      font-size: 14px;
+      color: #9ca3af;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 10px;
+      font-size: 14px;
+    }
+
+    thead {
+      background: #111827;
+      position: sticky;
+      top: 0;
+      z-index: 1;
+    }
+
+    th, td {
+      padding: 10px 8px;
+      text-align: left;
+      border-bottom: 1px solid #111827;
+      white-space: nowrap;
+    }
+
+    th {
+      font-weight: 600;
+      color: #e5e7eb;
+    }
+
+    tbody tr:nth-child(even) {
+      background: #020617;
+    }
+
+    tbody tr:nth-child(odd) {
+      background: #030712;
+    }
+
+    tbody tr:hover {
+      background: #1f2937;
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    .badge-rank {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 32px;
+      padding: 2px 8px;
+      border-radius: 999px;
+      font-weight: 600;
+      background: #22c55e1a;
+      color: #22c55e;
+    }
+
+    .badge-rank.top1 {
+      background: #fbbf241a;
+      color: #facc15;
+    }
+
+    .badge-rank.top2 {
+      background: #38bdf81a;
+      color: #38bdf8;
+    }
+    .badge-rank.top3 {
+      background: #38bdf81a;
+      color: #ff006f;
+    }
+    .scroll-wrapper {
+
+      border-radius: 12px;
+      border: 1px solid #111827;
+      margin-top: 10px;
+    }
+
+    .footer {
+      margin-top: 16px;
+      font-size: 12px;
+      color: #6b7280;
+    }
+	.user-avatar {
+		width: 32px;
+		height: 32px;
+		border-radius: 50%;
+		margin: 0 0.75rem 0 0;
+		border: 2px solid var(--border);
+		object-fit: cover;
+	}
+	.cell-center {
+	  display: flex;
+	  align-items: center;   
+	  justify-content: left; 
+	  gap: 6px;              
+	  text-align: center;
+	}
+	.bold-text {
+	  font-weight: bold;
+	}
+    a {
+      color: #38bdf8;
+      text-decoration: none;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+
+    pre {
+      background: #020617;
+      border-radius: 8px;
+      padding: 10px;
+      overflow: auto;
+      border: 1px solid #111827;
+      font-size: 12px;
+      max-height: 300px;
+    }
+
+    @media (max-width: 600px) {
+      body {
+        padding: 12px;
+      }
+      h1 {
+        font-size: 22px;
+      }
+      table {
+        font-size: 12px;
+      }
+    }
+  </style>
+</head>
+<body>
+ <div class="hero"><h1>ICCM MindShare Leaderboard</h1>
+  <p class="subtitle">
+    Re-Style by Hip
+    <a href="https://farcaster.com/hiepdong" target="_blank" rel="noopener noreferrer">
+      (@hiepdong)
+    </a> with love
+  </p>
+
+  <div class="card">
+    <div id="status">Loading leaderboard…</div>
+
+    <div class="scroll-wrapper">
+      <table id="leaderboardTable" class="hidden">
+        <thead></thead>
+        <tbody></tbody>
+      </table>
+    </div>
+
+    <pre id="rawJson" class="hidden"></pre>
+
+    <div class="footer">
+      This website was not affected by CloudFlare because i dont use this shiet
+    </div>
+  </div>
+
+  <script>
+    const API_URL = "https://infofi-be-production.up.railway.app/api/leaderboard";
+    const statusEl = document.getElementById("status");
+    const tableEl = document.getElementById("leaderboardTable");
+    const theadEl = tableEl.querySelector("thead");
+    const tbodyEl = tableEl.querySelector("tbody");
+    const rawJsonEl = document.getElementById("rawJson");
+
+    async function loadLeaderboard() {
+      try {
+        statusEl.textContent = "Loading leaderboard…";
+
+        const res = await fetch(API_URL);
+        if (!res.ok) {
+          throw new Error("HTTP error " + res.status);
+        }
+
+        const json = await res.json();
+        //console.log("Raw API response:", json);
+
+        const data = extractArrayFromResponse(json);
+
+        if (!data) {
+          statusEl.textContent = "Could not find an array in API response. Showing raw JSON below.";
+          rawJsonEl.textContent = JSON.stringify(json, null, 2);
+          rawJsonEl.classList.remove("hidden");
+          return;
+        }
+
+        if (!data.length) {
+          statusEl.textContent = "No data available.";
+          return;
+        }
+
+        renderTable(data);
+		
+		const lastUpdate = json?.data?.last_updated;
+
+		if (lastUpdate) {
+		  statusEl.textContent = "Last updated: " + formatDateLocalFromUtc(lastUpdate);
+		} else {
+		  statusEl.textContent = `Loaded ${data.length} entries.`;
+		}
+
+        tableEl.classList.remove("hidden");
+      } catch (err) {
+        console.error(err);
+        statusEl.textContent = "Failed to load leaderboard: " + err.message;
+      }
+    }
+	function parseUtcTimestamp(ts) {
+	  let base = ts;
+	  const dotIndex = ts.indexOf('.');
+	  if (dotIndex !== -1) {
+		base = ts.slice(0, dotIndex);
+	  }
+
+	  return new Date(base + 'Z');
+	}
+
+	function formatDateLocalFromUtc(ts) {
+	  const d = parseUtcTimestamp(ts);
+	  const tz = Intl.DateTimeFormat().resolvedOptions().timeZone;
+
+	  return d.toLocaleString(undefined, {
+		year: "numeric",
+		month: "2-digit",
+		day: "2-digit",
+		hour: "2-digit",
+		minute: "2-digit",
+		second: "2-digit"
+	  }) + ` (${tz})`;
+	}
+
+    function extractArrayFromResponse(json) {
+      if (Array.isArray(json)) return json;
+
+      if (typeof json === "string") {
+        try {
+          const parsed = JSON.parse(json);
+          return extractArrayFromResponse(parsed);
+        } catch (e) {
+        }
+      }
+
+      if (json && typeof json === "object") {
+        const candidateKeys = ["data", "leaderboard", "results", "items", "rows"];
+        for (const key of candidateKeys) {
+          if (Array.isArray(json[key])) {
+            return json[key];
+          }
+        }
+      }
+
+      const arr = findFirstArray(json);
+      if (arr) return arr;
+
+      if (json && typeof json === "object" && !Array.isArray(json)) {
+        const values = Object.values(json);
+        if (
+          values.length &&
+          values.every(v => v && typeof v === "object" && !Array.isArray(v))
+        ) {
+          return values;
+        }
+      }
+
+      return null;
+    }
+
+    function findFirstArray(node) {
+      if (Array.isArray(node)) return node;
+
+      if (typeof node === "string") {
+        try {
+          const parsed = JSON.parse(node);
+          return findFirstArray(parsed);
+        } catch {
+          return null;
+        }
+      }
+
+      if (node && typeof node === "object") {
+        for (const value of Object.values(node)) {
+          const found = findFirstArray(value);
+          if (found) return found;
+        }
+      }
+
+      return null;
+    }
+
+    function renderTable(data) {
+    const columns = [
+      { key: "rank",         label: "RANK" },
+      { key: "pfp_url",  label: "PROFILE" },
+	  { key: "username",       label: "LINK" },
+	  { key: "mindshare",      label: "MINDSHARE" },
+	  { key: "cast_count",      label: "TOTAL CAST" },
+      { key: "score",      label: "SCORE" },
+	  { key: "neynar_user_score",       label: "NEYNAR" },
+	  { key: "is_zora_holder",       label: "HOLDER" }
+    ];
+
+
+    theadEl.innerHTML = "";
+    const headerRow = document.createElement("tr");
+    columns.forEach(col => {
+      const th = document.createElement("th");
+      th.textContent = col.label;
+      headerRow.appendChild(th);
+    });
+    theadEl.appendChild(headerRow);
+
+
+    tbodyEl.innerHTML = "";
+    data.forEach((item, index) => {
+      const tr = document.createElement("tr");
+
+      columns.forEach(col => {
+        const td = document.createElement("td");
+        let value = item[col.key];
+
+        if (col.key === "rank") {
+          const span = document.createElement("span");
+          span.className = "badge-rank";
+          const rankVal = Number(value ?? index + 1);
+          if (rankVal === 1) span.classList.add("top1");
+          else if (rankVal === 2) span.classList.add("top2");
+          else if (rankVal === 3) span.classList.add("top3");
+          span.textContent = "#" + rankVal;
+          td.appendChild(span);
+        } else if (col.key === "pfp_url") {
+			const img = document.createElement("img");
+			img.src = value;
+			img.className = "user-avatar";
+			const span = document.createElement("span");
+			span.textContent = item.display_name;  
+			span.className = "bold-text"
+			td.appendChild(img);
+			td.appendChild(span);
+			td.classList.add("cell-center");
+		}else if (col.key === "cast_count") {
+			const span1 = document.createElement("span");
+			span1.textContent = item.cast_count + " | ";  
+			span1.className = "bold-text"
+			const span2 = document.createElement("span");
+			span2.textContent = "👍 " + item.total_likes; 
+			const span3 = document.createElement("span");
+			span3.textContent = "🔁 " + item.total_recasts; 
+
+			td.appendChild(span1);
+			td.appendChild(span2);
+			td.appendChild(span3);
+			td.classList.add("cell-center");
+		} else if (col.key === "username") {
+			const aa = document.createElement("a");
+			aa.href = "https://farcaster.com/" + value;                  
+			aa.textContent = "https://farcaster.com/" + value;   
+			aa.target = "_blank";
+			td.appendChild(aa);
+		} else if (col.key === "is_zora_holder") {
+			const span = document.createElement("span");
+			span.textContent = value ? "✅" : "";
+			td.appendChild(span);
+		}else {
+          if (typeof value === "string" && value.length > 40) {
+            value = value.slice(0, 37) + "...";
+          }
+          td.textContent = value ?? "";
+        }
+
+        tr.appendChild(td);
+      });
+
+      tbodyEl.appendChild(tr);
+    });
+  }
+
+    window.addEventListener("load", loadLeaderboard);
+  </script>
+</body>
+</html>

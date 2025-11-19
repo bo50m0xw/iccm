@@ -164,6 +164,26 @@
 		border: 2px solid var(--border);
 		object-fit: cover;
 	}
+  .holder-badge.holder {
+    background: rgba(10, 255, 68, 0.6);
+    color: var(--accent-blue);
+  }
+  .holder-badge.non-holder {
+      background: rgba(153, 153, 153, 0.1);
+      color: var(--text-muted);
+      position: relative;
+      cursor: help;
+  }
+  .holder-badge {
+      display: inline-block;
+      font-size: 0.65rem;
+      padding: 0.125rem 0.375rem;
+      border-radius: 4px;
+      margin-left: 0.375rem;
+      font-weight: 500;
+      border:solid;
+      border-color:#7fffd438;
+  }
 	.cell-center {
 	  display: flex;
 	  align-items: center;   
@@ -174,6 +194,41 @@
 	.bold-text {
 	  font-weight: bold;
 	}
+  .tooltip-cell {
+    position: relative;
+    display: inline-block;
+    cursor: pointer;
+  }
+
+  .tooltip-cell .tooltip-text {
+    visibility: hidden;
+    opacity: 0;
+    width: max-content;
+    background: #333;
+    color: #fff;
+    font-size: 13px;
+    padding: 6px 10px;
+    border-radius: 4px;
+    position: absolute;
+    bottom: 130%;
+    left: 50%;
+    transform: translateX(-50%);
+    white-space: nowrap;
+    transition: opacity .2s ease-in-out;
+    z-index: 100;
+    text-align: center;
+  }
+
+  .tooltip-cell .tooltip-text a {
+    color: #4DA3FF;
+    text-decoration: underline;
+    font-weight: bold;
+  }
+
+  .tooltip-cell:hover .tooltip-text {
+    visibility: visible;
+    opacity: 1;
+  }
     a {
       color: #38bdf8;
       text-decoration: none;
@@ -209,10 +264,8 @@
 <body>
  <div class="hero"><h1>ICCM MindShare Leaderboard</h1>
   <p class="subtitle">
-    Re-Style by Hip
-    <a href="https://farcaster.com/hiepdong" target="_blank" rel="noopener noreferrer">
-      (@hiepdong)
-    </a> with love
+    Thanks dev <a href="https://farcaster.com/iamrekt.eth" target="_blank" rel="noopener noreferrer">Rekt </a><br>
+    Re-Style by <a href="https://farcaster.com/hiepdong" target="_blank" rel="noopener noreferrer"> Hip</a> with love.
   </p>
 
   <div class="card">
@@ -372,8 +425,7 @@
 	  { key: "mindshare",      label: "MINDSHARE" },
 	  { key: "cast_count",      label: "TOTAL CAST" },
       { key: "score",      label: "SCORE" },
-	  { key: "neynar_user_score",       label: "NEYNAR" },
-	  { key: "is_zora_holder",       label: "HOLDER" }
+	  { key: "neynar_user_score",       label: "NEYNAR" }
     ];
 
 
@@ -411,8 +463,21 @@
 			const span = document.createElement("span");
 			span.textContent = item.display_name;  
 			span.className = "bold-text"
+      const span1 = document.createElement("span");
+      span1.textContent = item.is_zora_holder ? "Holder" : "Not holder";
+      span1.className = item.is_zora_holder ? "holder-badge holder" : "holder-badge non-holder";
+      if (!item.is_zora_holder) {
+        const tooltip = document.createElement("span");
+        tooltip.className = "tooltip-text";
+        tooltip.innerHTML = `Not <a href="https://zora.co/@baseiccm" target="_blank">$BASEICCM</a> holder`;
+
+
+        span1.classList.add("tooltip-cell");
+        span1.appendChild(tooltip);
+      }
 			td.appendChild(img);
 			td.appendChild(span);
+      td.appendChild(span1);
 			td.classList.add("cell-center");
 		}else if (col.key === "cast_count") {
 			const span1 = document.createElement("span");
@@ -427,17 +492,19 @@
 			td.appendChild(span2);
 			td.appendChild(span3);
 			td.classList.add("cell-center");
-		} else if (col.key === "username") {
+		} else if (col.key === "mindshare") {
+      const mss = document.createElement("span");
+      mss.textContent = value + " % ";  
+      mss.className = "bold-text"
+      td.appendChild(mss);
+    }
+    else if (col.key === "username") {
 			const aa = document.createElement("a");
 			aa.href = "https://farcaster.com/" + value;                  
 			aa.textContent = "https://farcaster.com/" + value;   
 			aa.target = "_blank";
 			td.appendChild(aa);
-		} else if (col.key === "is_zora_holder") {
-			const span = document.createElement("span");
-			span.textContent = value ? "✅" : "";
-			td.appendChild(span);
-		}else {
+		} else {
           if (typeof value === "string" && value.length > 40) {
             value = value.slice(0, 37) + "...";
           }
@@ -455,6 +522,3 @@
   </script>
 </body>
 </html>
-
-
-
